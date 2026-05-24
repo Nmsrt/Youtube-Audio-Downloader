@@ -9,3 +9,71 @@
 .locationRow .secondary,.small{border-radius:6px}
 .heroStats div{border-radius:4px}
 @media(max-width:850px){.urlCard{grid-template-columns:1fr}.primary{width:100%}}
+
+.downloadPreview{
+  display:flex;
+  gap:18px;
+  align-items:flex-start;
+  border:1px solid var(--border);
+  padding:16px;
+  background:var(--card);
+  margin-top:14px;
+}
+
+.thumb{
+  width:240px;
+  height:135px;
+  object-fit:cover;
+  border-radius:6px;
+  border:1px solid var(--border);
+  flex-shrink:0;
+  background:var(--soft);
+}
+
+.thumbFallback{
+  display:grid;
+  place-items:center;
+  font-size:44px;
+  color:var(--accent);
+}
+
+.previewMeta{
+  display:flex;
+  gap:16px;
+  align-items:flex-start;
+  min-width:0;
+}
+
+.previewMeta h3{
+  margin:0 0 8px;
+  font-size:22px;
+  line-height:1.25;
+}
+
+.previewMeta p{
+  margin:0 0 6px;
+  color:var(--muted);
+}
+
+.previewMeta small{
+  color:var(--muted);
+  font-size:13px;
+}
+
+.noSpinner .badge{
+  flex-shrink:0;
+}
+
+@media(max-width:850px){
+
+  .downloadPreview{
+    flex-direction:column;
+  }
+
+  .thumb{
+    width:100%;
+    height:auto;
+    aspect-ratio:16/9;
+  }
+
+}
