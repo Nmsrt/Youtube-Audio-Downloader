@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>YT-DLP Audio Downloader</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="yt">▶</div>
+      <div>
+        <h1>YT-DLP Downloader</h1>
+        <p>YouTube to MP3 & WAV Downloader</p>
+      </div>
+    </div>
+    <button id="themeBtn" class="iconBtn" title="Toggle theme">☀</button>
+  </header>
+
+  <main class="shell">
+    <section class="heroCard">
+      <div class="heroCopy">
+        <p class="eyebrow">Audio only</p>
+        <h2>Clean YouTube audio downloads</h2>
+        <p class="introText">Paste a link, choose MP3 or WAV, edit the file name if needed, and save straight to your selected folder.</p>
+      </div>
+      <div class="heroStats">
+        <div><strong>MP3</strong><span>compressed</span></div>
+        <div><strong>WAV</strong><span>uncompressed</span></div>
+        <div><strong>Created by</strong><span>CallMeSenpai1001</span></div>
+      </div>
+    </section>
+
+    <section class="card urlCard">
+      <div class="fieldBlock">
+        <label>YouTube URL</label>
+        <div class="inputWrap">
+          <span>⌁</span>
+          <input id="urlInput" placeholder="https://www.youtube.com/watch?v=..." autocomplete="off" />
+        </div>
+      </div>
+      <button id="downloadBtn" class="primary">⇩ Download</button>
+    </section>
+
+    <section class="controlsGrid">
+      <div class="card controlCard fileCard">
+        <label>File name</label>
+        <input id="filenameInput" class="filenameSingle" placeholder="Auto-filled from YouTube title" />
+        <p class="hint">Automatically uses the YouTube title after pasting a link. You can still edit it.</p>
+      </div>
+
+      <div class="card controlCard formatCard">
+        <label>Audio format</label>
+        <div class="formatRow">
+          <button class="format active" data-format="mp3"><span class="note">♫</span><strong>MP3</strong><small>Compressed</small><i></i></button>
+          <button class="format" data-format="wav"><span class="note">≋</span><strong>WAV</strong><small>Uncompressed</small><i></i></button>
+        </div>
+      </div>
+
+      <div class="card controlCard qualityCard">
+        <label>Audio quality</label>
+        <select id="qualitySelect">
+          <option value="auto">Best Quality (Auto)</option>
+          <option value="0">Highest MP3 quality</option>
+          <option value="2">High</option>
+          <option value="5">Medium</option>
+          <option value="9">Smaller file</option>
+        </select>
+        <p id="qualityHint" class="hint">Quality setting applies to MP3 exports.</p>
+      </div>
+
+      <div class="card controlCard locationCard">
+        <label>Save location</label>
+        <div class="locationRow">
+          <div class="folderIcon">▣</div>
+          <strong id="locationText"></strong>
+          <button id="changeBtn" class="secondary">Change</button>
+        </div>
+        <p class="hint">Defaults to your computer's Downloads folder.</p>
+      </div>
+    </section>
+
+    <section class="card advancedCard">
+      <details class="advancedDetails">
+        <summary>
+          <span>Advanced yt-dlp options</span>
+          <label class="switchRow" onclick="event.stopPropagation()">
+            <input id="advancedToggle" type="checkbox" />
+            <span class="switch"></span>
+          </label>
+        </summary>
+        <textarea id="advancedBox" class="hidden" placeholder="Optional extra yt-dlp args"></textarea>
+      </details>
+    </section>
+
+    <section class="card progressCard">
+      <div class="progressTop">
+        <h2>Download Progress</h2>
+        <button id="clearBtn" class="secondary small">Clear</button>
+      </div>
+      <div id="progressContent" class="empty">
+        <div class="emptyIcon">⇩</div>
+        <h3>No active downloads</h3>
+        <p>Enter a YouTube URL above and click Download to start.</p>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
