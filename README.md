@@ -62,13 +62,13 @@ YouTube Audio Downloader is a locally hosted web app that lets you extract audio
 
 ## Tech Stack
 
-| Layer | Technology |
-|---|---|
-| Runtime | [Node.js](https://nodejs.org/) |
-| Backend | [Express](https://expressjs.com/) |
+| Layer            | Technology                                 |
+| ---------------- | ------------------------------------------ |
+| Runtime          | [Node.js](https://nodejs.org/)             |
+| Backend          | [Express](https://expressjs.com/)          |
 | Audio extraction | [yt-dlp](https://github.com/yt-dlp/yt-dlp) |
-| Audio processing | [FFmpeg](https://ffmpeg.org/) |
-| Frontend | Vanilla JavaScript, HTML, CSS |
+| Audio processing | [FFmpeg](https://ffmpeg.org/)              |
+| Frontend         | Vanilla JavaScript, HTML, CSS              |
 
 ---
 
@@ -85,6 +85,7 @@ All four dependencies below **must be installed** before running the app.
 Download and install the **LTS version** from [nodejs.org](https://nodejs.org/).
 
 Verify:
+
 ```bash
 node -v
 npm -v
@@ -99,6 +100,7 @@ npm -v
 > ⚠️ During installation, check **"Add Python to PATH"** before proceeding.
 
 Verify:
+
 ```bash
 python --version
 ```
@@ -112,6 +114,7 @@ pip install -U yt-dlp
 ```
 
 Verify:
+
 ```bash
 yt-dlp --version
 ```
@@ -130,10 +133,12 @@ yt-dlp --version
    C:\ffmpeg\bin\ffmpeg.exe
    ```
 3. Add FFmpeg to your PATH:
+
    ```
    Windows Search → Edit the system environment variables
    → Environment Variables → Path → Edit → New
    ```
+
    Add: `C:\ffmpeg\bin` — then press OK on all dialogs.
 
 4. Open a **new** terminal and verify:
@@ -146,6 +151,7 @@ yt-dlp --version
 ### Installation
 
 1. **Download or clone the repository:**
+
    ```bash
    git clone https://github.com/Nmsrt/Youtube-Audio-Downloader.git
    cd Youtube-Audio-Downloader
@@ -171,8 +177,8 @@ yt-dlp --version
 1. Paste a YouTube URL into the input field.
 2. Wait for the video title to auto-fill as the filename.
 3. Select your output format — **MP3** or **WAV**.
-4. *(Optional)* Edit the filename.
-5. *(Optional)* Change the save location. Default:
+4. _(Optional)_ Edit the filename.
+5. _(Optional)_ Change the save location. Default:
    ```
    C:\Users\YOUR_USERNAME\Downloads
    ```
@@ -182,10 +188,10 @@ yt-dlp --version
 
 ## Audio Quality
 
-| Format | Quality Setting | Notes |
-|---|---|---|
-| MP3 | Selectable | Compressed; quality options are enabled |
-| WAV | Fixed (max) | Uncompressed; quality selection is disabled automatically |
+| Format | Quality Setting | Notes                                                     |
+| ------ | --------------- | --------------------------------------------------------- |
+| MP3    | Selectable      | Compressed; quality options are enabled                   |
+| WAV    | Fixed (max)     | Uncompressed; quality selection is disabled automatically |
 
 ---
 
@@ -194,11 +200,26 @@ yt-dlp --version
 ```
 Youtube-Audio-Downloader/
 ├── public/
-│   ├── index.html            # App UI
+│   ├── index.html            # App markup
 │   ├── style.css             # Styling + dark mode
-│   └── script.js             # Frontend logic
+│   └── js/                   # Frontend ES modules
+│       ├── main.js           # Entry point: state + event wiring
+│       ├── dom.js            # Cached element references
+│       ├── api.js            # fetch helpers
+│       ├── ui.js             # Progress / preview rendering
+│       ├── theme.js          # Light/dark theme toggle
+│       ├── utils.js          # escapeHtml, log trimming
+│       ├── errors.js         # Error-message helper
+│       └── types.js          # JSDoc typedefs
+├── src/                      # Backend
+│   ├── app.js                # Express app factory
+│   ├── config.js             # Constants (port, paths, formats)
+│   ├── settings.js           # Mutable download-folder state
+│   ├── routes/api.js         # API endpoints
+│   ├── services/ytDlp.js     # yt-dlp process integration
+│   └── utils/                # files.js, errors.js
+├── server.js                 # Entry point: starts the HTTP server
 ├── start-app.bat             # One-click launcher (Windows)
-├── server.js                 # Express backend + yt-dlp integration
 ├── package.json
 └── README.md
 ```
@@ -208,17 +229,21 @@ Youtube-Audio-Downloader/
 ## Troubleshooting
 
 **`yt-dlp` not found**
+
 ```bash
 pip install -U yt-dlp
 ```
+
 Restart your terminal afterward.
 
 ---
 
 **FFmpeg not found**
+
 ```bash
 ffmpeg -version
 ```
+
 If this fails, FFmpeg is either not installed or not added to PATH correctly. Revisit the [FFmpeg installation steps](#4-ffmpeg-windows).
 
 ---
@@ -226,6 +251,7 @@ If this fails, FFmpeg is either not installed or not added to PATH correctly. Re
 **App opens but downloads fail**
 
 Check that all of the following are true:
+
 - `yt-dlp` is installed and accessible from terminal
 - `FFmpeg` is installed and accessible from terminal
 - Your internet connection is active
@@ -235,13 +261,12 @@ Check that all of the following are true:
 
 **Port already in use**
 
-Open `server.js` and change the port number:
-```js
-// Change this:
-const PORT = 3000;
+Set a `PORT` environment variable before starting, e.g. `PORT=3001 npm start`,
+or edit the default in `src/config.js`:
 
-// To something else:
-const PORT = 3001;
+```js
+// In src/config.js
+PORT: Number(process.env.PORT) || 3000,
 ```
 
 ---

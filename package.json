@@ -1,13 +1,29 @@
 {
   "name": "yt-dlp-audio-downloader",
   "version": "1.0.0",
+  "description": "Local web app to download YouTube audio as MP3 or WAV via yt-dlp.",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "typecheck": "tsc -p jsconfig.json"
   },
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.18.3",
     "sanitize-filename": "^1.6.3"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.0.0",
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.0.0",
+    "eslint": "^9.0.0",
+    "eslint-config-prettier": "^9.1.0",
+    "globals": "^15.0.0",
+    "prettier": "^3.2.0",
+    "typescript": "^5.4.0"
   }
 }
