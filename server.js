@@ -64,6 +64,44 @@ async function getVideoTitle(url) {
   return stdout.split(/\r?\n/).find(Boolean)?.trim() || 'youtube-audio';
 }
 
+async function getVideoInfo(url) {
+  const { stdout } = await runYtDlp([
+    '--no-playlist',
+    '--dump-single-json',
+    url,
+  ]);
+
+  const info = JSON.parse(stdout);
+
+  return {
+    title: info.title || 'youtube-audio',
+    safeTitle: cleanBaseName(info.title || 'youtube-audio'),
+    thumbnail: info.thumbnail || '',
+    uploader: info.uploader || '',
+    duration: info.duration_string || '',
+  };
+}
+
+app.post('/api/info', async (req, res) => {
+  try {
+    const { url } = req.body;
+
+    if (!url) {
+      return res.status(400).json({
+        error: 'YouTube URL is required',
+      });
+    }
+
+    const info = await getVideoInfo(url);
+    res.json(info);
+  } catch (err) {
+    res.status(500).json({
+      error:
+        'Unable to read video info. Make sure yt-dlp is installed and the URL is valid.',
+    });
+  }
+});
+
 function findDownloadedFile(folder, baseName, format) {
   const exact = path.join(folder, `${baseName}.${format}`);
   if (fs.existsSync(exact)) return exact;
